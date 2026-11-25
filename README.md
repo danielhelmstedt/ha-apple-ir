@@ -2,15 +2,15 @@
 
 Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infrared receiver** entity, so other integrations can subscribe to IR Remote button presses.
 
-
 ## Requirements
 - Home Assistant 2026.4 or later, which includes the `infrared` component with receiver
   support.
 - The receiver visible to Home Assistant as a hidraw device (e.g. USB passthrough to a VM) and readable by the HA process.
 
+<!-- ha-marketplace:exclude-start -->
 ## Installation (Marketplace) - Recommended
 
-[![Open your Home Assistant instance and open a repository in the Marketplace.](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=danielhelmstedt&repository=ha-apple-ir)
+[![Open your Home Assistant instance and open a repository in the Marketplace.](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=danielhelmstedt&repository=ha-apple-ir&category=integration)
 
 1. Add `https://github.com/danielhelmstedt/ha-apple-ir` to Marketplace as a
    [custom repository](https://next.home-assistant.io/integrations/marketplace/#custom-repositories).
@@ -26,6 +26,9 @@ Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infra
 3. Restart Home Assistant.
 4. Go to **Settings → Devices & services → Add integration**, search for
    **Apple IR Receiver**, and complete setup.
+<!-- ha-marketplace:exclude-end -->
+
+## Configuration
 
 The integration automatically discovers the receiver. If it cannot find or access the receiver, or cannot determine which receiver to use, it raises a repair under **Settings → System → Repairs**.
 

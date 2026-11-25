@@ -8,16 +8,14 @@ Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infra
   support.
 - The receiver visible to Home Assistant as a hidraw device (e.g. USB passthrough to a VM) and readable by the HA process.
 
-## Installation (HACS) - Recommended
+## Installation (Marketplace) - Recommended
 
-1. Have [HACS](https://hacs.xyz/) installed.
-2. Add `https://github.com/danielhelmstedt/apple-ir-hacs` as a
-   [custom repository](https://hacs.xyz/docs/faq/custom_repositories/) with
-   **Type: Integration**.
-3. In HACS, find **Apple IR Receiver** and click **Download**, then restart Home
-   Assistant for the installation to take effect.
-4. Go to **Settings → Devices & services → Add integration**, search for
-   **Apple IR Receiver**, and complete setup.
+[![Open your Home Assistant instance and open a repository in the Marketplace.](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=danielhelmstedt&repository=ha-apple-ir)
+
+1. Add `https://github.com/danielhelmstedt/ha-apple-ir` to Marketplace as a
+   [custom repository](https://next.home-assistant.io/integrations/marketplace/#custom-repositories).
+2. In Marketplace, find **Apple IR Receiver** and click **Install**.
+3. Complete the setup flow by selecting your HIDRaw device, and naming the entry.
 
 ## Installation (Manual)
 

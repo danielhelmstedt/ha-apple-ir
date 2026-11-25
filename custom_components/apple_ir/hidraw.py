@@ -26,6 +26,11 @@ class HidrawDevice:
     phys: str
 
 
+def device_id(device: HidrawDevice) -> str:
+    """Return the device's current hardware identity."""
+    return f"{device.vendor_id:04x}:{device.product_id:04x}:{device.phys}"
+
+
 def _parse_uevent(text: str) -> dict[str, str]:
     result: dict[str, str] = {}
     for line in text.splitlines():

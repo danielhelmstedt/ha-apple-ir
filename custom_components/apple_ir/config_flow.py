@@ -14,11 +14,7 @@ from homeassistant.helpers.selector import (
 )
 
 from .const import DOMAIN
-from .hidraw import HidrawDevice, find_apple_ir_devices
-
-
-def _unique_id(device: HidrawDevice) -> str:
-    return f"{device.vendor_id:04x}:{device.product_id:04x}:{device.phys}"
+from .hidraw import HidrawDevice, device_id, find_apple_ir_devices
 
 
 def _device_schema(devices: list[HidrawDevice]) -> vol.Schema:
@@ -44,43 +40,52 @@ class AppleIRConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Let the user pick a detected receiver."""
+        """Select a receiver automatically when there is only one."""
         devices = await self.hass.async_add_executor_job(find_apple_ir_devices)
         by_path = {device.path: device for device in devices}
-
-        if user_input is not None:
-            device = by_path[user_input["path"]]
-            await self.async_set_unique_id(_unique_id(device))
-            self._abort_if_unique_id_configured()
-            return self.async_create_entry(
-                title=device.name, data={"path": device.path}
-            )
 
         if not devices:
             return self.async_abort(reason="no_devices_found")
 
+        device = (
+            by_path.get(user_input["path"])
+            if user_input is not None
+            else devices[0] if len(devices) == 1 else None
+        )
+        if device is not None:
+            await self.async_set_unique_id(device_id(device))
+            self._abort_if_unique_id_configured()
+            return self.async_create_entry(
+                title=device.name,
+                data={"path": device.path, "device_id": device_id(device)},
+            )
+
         return self.async_show_form(
-            step_id="user", data_schema=_device_schema(devices)
+            step_id="user",
+            data_schema=_device_schema(devices),
+            errors={"base": "device_not_found"} if user_input is not None else None,
         )
 
     async def async_step_reconfigure(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Let the user pick the receiver again, e.g. after /dev/hidraw* changed."""
+        """Update the receiver without changing the entry's entity identity."""
         devices = await self.hass.async_add_executor_job(find_apple_ir_devices)
         by_path = {device.path: device for device in devices}
 
-        if user_input is not None:
-            device = by_path[user_input["path"]]
-            await self.async_set_unique_id(_unique_id(device))
-            return self.async_update_reload_and_abort(
-                self._get_reconfigure_entry(),
-                unique_id=_unique_id(device),
-                data_updates={"path": device.path},
-            )
-
         if not devices:
             return self.async_abort(reason="no_devices_found")
+
+        device = (
+            by_path.get(user_input["path"])
+            if user_input is not None
+            else devices[0] if len(devices) == 1 else None
+        )
+        if device is not None:
+            return self.async_update_reload_and_abort(
+                self._get_reconfigure_entry(),
+                data_updates={"path": device.path, "device_id": device_id(device)},
+            )
 
         return self.async_show_form(
             step_id="reconfigure",
@@ -88,4 +93,5 @@ class AppleIRConfigFlow(ConfigFlow, domain=DOMAIN):
                 _device_schema(devices),
                 {"path": self._get_reconfigure_entry().data["path"]},
             ),
+            errors={"base": "device_not_found"} if user_input is not None else None,
         )

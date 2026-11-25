@@ -20,6 +20,19 @@
       "no_devices_found": "No Apple IR receiver found via hidraw. Make sure the receiver is connected/passed through and /dev/hidraw* is accessible.",
       "already_configured": "Device is already configured",
       "reconfigure_successful": "Re-configuration was successful"
+    },
+    "error": {
+      "device_not_found": "The selected receiver is no longer available. Select another receiver."
+    }
+  },
+  "issues": {
+    "device_unavailable": {
+      "title": "Apple IR receiver is unavailable",
+      "description": "Check that the receiver is connected or passed through to Home Assistant and that Home Assistant can read its /dev/hidraw device. The integration will retry automatically."
+    },
+    "device_selection_required": {
+      "title": "Select an Apple IR receiver",
+      "description": "Multiple Apple IR receivers were found, but the configured receiver could not be identified. Open Settings > Devices & services, find Apple IR Receiver, and select Reconfigure to choose a receiver."
     }
   }
 }

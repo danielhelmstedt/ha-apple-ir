@@ -15,7 +15,7 @@ Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infra
 1. Add `https://github.com/danielhelmstedt/ha-apple-ir` to Marketplace as a
    [custom repository](https://next.home-assistant.io/integrations/marketplace/#custom-repositories).
 2. In Marketplace, find **Apple IR Receiver** and click **Install**.
-3. Complete the setup flow by selecting your HIDRaw device, and naming the entry.
+3. Complete the setup flow. If multiple receivers are found, select the one to use.
 
 ## Installation (Manual)
 
@@ -26,6 +26,8 @@ Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infra
 3. Restart Home Assistant.
 4. Go to **Settings → Devices & services → Add integration**, search for
    **Apple IR Receiver**, and complete setup.
+
+The integration automatically discovers the receiver. If it cannot find or access the receiver, or cannot determine which receiver to use, it raises a repair under **Settings → System → Repairs**.
 
 ## Supported remotes
 This integration uses the Mac's built-in IR receiver, which exclusively decodes 32-bit NEC protocol signals operating on a 38 kHz carrier frequency. 

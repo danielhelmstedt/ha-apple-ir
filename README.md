@@ -12,10 +12,9 @@ Exposes the built-in IR receiver of older Apple Macs as a Home Assistant **Infra
 
 [![Open your Home Assistant instance and open a repository in the Marketplace.](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=danielhelmstedt&repository=ha-apple-ir&category=integration)
 
-1. Add `https://github.com/danielhelmstedt/ha-apple-ir` to Marketplace as a
-   [custom repository](https://next.home-assistant.io/integrations/marketplace/#custom-repositories).
-2. In Marketplace, find **Apple IR Receiver** and click **Install**.
-3. Complete the setup flow. If multiple receivers are found, select the one to use.
+Apple IR Receiver is available in the default Marketplace catalog.
+1. In Marketplace, search for **Apple IR Receiver** and click **Install**.
+2. Complete the setup flow. If multiple receivers are found, select the one to use.
 
 ## Installation (Manual)
 
@@ -38,9 +37,9 @@ This integration uses the Mac's built-in IR receiver, which exclusively decodes 
 - **Apple Remotes:** Supports the white plastic and the silver aluminium remotes used up to the 3rd-generation Apple TV.
 - **Third-Party & Generic NEC Remotes:** Many brands implement the NEC protocol including Yamaha, Pioneer, Onkyo, Hisense, TCL, and others.
 
-Remotes which use proprietary protocols (e.g. Sony, LG, Samsung, Panasonic) are not recognised by the Apple IR receiver, so cannot be used with this integration. 
+Remotes which use proprietary protocols (e.g. Sony, LG, Samsung, Panasonic) are not recognised by the Apple IR receiver's firmware, so cannot be used with this integration. 
 
-**Note: This integration has been tested to work with Apple, Yamaha and Chiq remotes. Other NEC remotes should work, but this is not guaranteed.**
+**Note: This integration has been tested to work with Apple, Yamaha and Chiq remotes. Other NEC-compatible remotes should work, but this is not guaranteed.**
 
 ## Decoding
 - The Apple IR receiver firmware decodes NEC-style signals and exposes them as raw HID reports. The integration reads these from `/dev/hidraw*`, so no kernel driver (`CONFIG_HID_APPLEIR`) is needed.
